@@ -1,6 +1,8 @@
 import 'package:age_calculator/utils/color/color.dart';
 import 'package:flutter/material.dart';
 
+import 'age_calculator.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -63,41 +65,59 @@ class _HomePageState extends State<HomePage> {
                   height: 150,
                   width: double.infinity,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8, top: 17),
+                    padding: const EdgeInsets.only(left: 8, top: 15),
                     child: Column(
                       children: <Widget>[
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            const Icon(
-                              Icons.supervised_user_circle,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            InkWell(
-                              child: Text(
-                                "Age Calculator",
-                                style: TextStyle(
-                                    color: AppColors.appPrimary,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: Icon(
+                                Icons.supervised_user_circle,
+                                color: Colors.white,
+                                size: 30,
                               ),
                             ),
                             const SizedBox(
-                              width: 135,
+                              width: 15,
                             ),
-                            const Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.grey,
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10,),
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(Colors.black),
+                                ),
+                                onPressed: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AgeCalculator()));
+                                },
+                                child: InkWell(
+
+                                  child: Text(
+                                    "Age Calculator",
+                                    style: TextStyle(
+                                        color: AppColors.appPrimary,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 85,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Colors.grey,
+                              ),
                             )
                           ],
                         ),
                         const SizedBox(
-                          height: 45,
+                          height: 40,
                         ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,12 +136,12 @@ class _HomePageState extends State<HomePage> {
                                 "Add Family & Friends",
                                 style: TextStyle(
                                     color: AppColors.appPrimary,
-                                    fontSize: 17,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
                             const SizedBox(
-                              width: 85,
+                              width: 70,
                             ),
                             const Icon(
                               Icons.arrow_forward_ios,
@@ -157,19 +177,19 @@ class _HomePageState extends State<HomePage> {
                               size: 30,
                             ),
                             const SizedBox(
-                              width: 20,
+                              width: 15,
                             ),
                             InkWell(
                               child: Text(
                                 "Add/Subtract Days from Date",
                                 style: TextStyle(
                                     color: AppColors.appPrimary,
-                                    fontSize: 17,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
                             const SizedBox(
-                              width: 23,
+                              width: 0,
                             ),
                             const Icon(
                               Icons.arrow_forward_ios,
@@ -190,19 +210,19 @@ class _HomePageState extends State<HomePage> {
                               size: 30,
                             ),
                             const SizedBox(
-                              width: 20,
+                              width: 15,
                             ),
                             InkWell(
                               child: Text(
                                 "Working Days Between Dates",
                                 style: TextStyle(
                                     color: AppColors.appPrimary,
-                                    fontSize: 17,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
                             const SizedBox(
-                              width: 23,
+                              width: 2,
                             ),
                             const Icon(
                               Icons.arrow_forward_ios,
@@ -230,12 +250,12 @@ class _HomePageState extends State<HomePage> {
                                 "Age Difference",
                                 style: TextStyle(
                                     color: AppColors.appPrimary,
-                                    fontSize: 17,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
                             const SizedBox(
-                              width: 133,
+                              width: 125,
                             ),
                             const Icon(
                               Icons.arrow_forward_ios,
@@ -263,7 +283,7 @@ class _HomePageState extends State<HomePage> {
                                 "Leap year",
                                 style: TextStyle(
                                     color: AppColors.appPrimary,
-                                    fontSize: 17,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -307,7 +327,7 @@ class _HomePageState extends State<HomePage> {
                       "Other Apps",
                       style: TextStyle(
                           color: AppColors.appPrimary,
-                          fontSize: 17,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold),
                     ),
                   ),

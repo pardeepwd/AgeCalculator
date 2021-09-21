@@ -1,3 +1,5 @@
+import 'package:age_calculator/screens/add_subtract_day.dart';
+import 'package:age_calculator/screens/age_calculator.dart';
 import 'package:age_calculator/screens/home_page.dart';
 import 'package:flutter/material.dart';
 void main(){
@@ -12,7 +14,9 @@ class MyApp extends StatelessWidget {
     return  const MaterialApp(
 
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+
+
+      home: AddSubtract(),
 
 
 
