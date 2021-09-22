@@ -234,6 +234,42 @@ class _AddSubtractState extends State<AddSubtract> {
             ),
           ),
           Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              height: 45,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                //border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  ElevatedButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Calculate",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      )),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "Clear",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          Padding(
             padding:
                 const EdgeInsets.only(left: 20, right: 15, bottom: 5, top: 10),
             child: Row(
