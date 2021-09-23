@@ -1,6 +1,7 @@
 import 'package:age_calculator/screens/working_days_dates.dart';
 import 'package:age_calculator/utils/color/color.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 import 'add_subtract_day.dart';
 import 'age_calculator.dart';
@@ -19,20 +20,42 @@ class _HomePageState extends State<HomePage> {
     return (await showDialog(
           context: context,
           builder: (context) => AlertDialog(
+            backgroundColor: Colors.white,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
             elevation: 2.0,
             actions: <Widget>[
               Column(
-                children: const <Widget>[
+                children:  <Widget>[
                   Center(
-                      child: Text(
-                    "Share",
-                    style: TextStyle(fontSize: 15, color: Colors.grey),
+                      child: InkWell(
+                        onTap: (){
+                          Share.share(
+                              'check out my website https://protocoderspoint.com/',
+                              subject: 'Sharing on Email');
+                        },
+                    child: const Text(
+                      "Share",
+                      style: TextStyle(fontSize: 20, color: Colors.grey),
+                    ),
                   )),
-                  Text("Rate it"),
-                  Text("FeedBack"),
-                  Text("More Apps")
+                  const InkWell(
+                      child: Text(
+                    "Rate it",
+                    style: TextStyle(fontSize: 20, color: Colors.grey),
+                  )),
+                  const InkWell(
+                    child: Text(
+                      "FeedBack",
+                      style: TextStyle(fontSize: 20, color: Colors.grey),
+                    ),
+                  ),
+                  const InkWell(
+                    child: Text(
+                      "More Apps",
+                      style: TextStyle(fontSize: 20, color: Colors.grey),
+                    ),
+                  )
                 ],
               ),
             ],
@@ -89,9 +112,7 @@ class _HomePageState extends State<HomePage> {
                             width: 15,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(
-                              left: 10,top: 10
-                            ),
+                            padding: const EdgeInsets.only(left: 10, top: 10),
                             child: InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -184,7 +205,9 @@ class _HomePageState extends State<HomePage> {
                               size: 30,
                             ),
                           ),
-                          SizedBox(width: 10,),
+                          SizedBox(
+                            width: 10,
+                          ),
                           InkWell(
                             onTap: () {
                               Navigator.push(
@@ -251,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           const Padding(
-                            padding: EdgeInsets.only(top: 12,left: 23),
+                            padding: EdgeInsets.only(top: 12, left: 23),
                             child: Icon(
                               Icons.arrow_forward_ios,
                               color: Colors.grey,
@@ -275,13 +298,12 @@ class _HomePageState extends State<HomePage> {
                             width: 20,
                           ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                      const AgeDifference()));
-
+                                          const AgeDifference()));
                             },
                             child: Text(
                               "Age Difference",
@@ -316,12 +338,11 @@ class _HomePageState extends State<HomePage> {
                             width: 20,
                           ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                      const LeapYear()));
+                                      builder: (context) => const LeapYear()));
                             },
                             child: Text(
                               "Leap year",

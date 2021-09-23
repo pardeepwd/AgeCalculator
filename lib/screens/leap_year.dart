@@ -1,5 +1,6 @@
 import 'package:age_calculator/utils/color/color.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class LeapYear extends StatefulWidget {
   const LeapYear({Key? key}) : super(key: key);
@@ -9,7 +10,12 @@ class LeapYear extends StatefulWidget {
 }
 
 class _LeapYearState extends State<LeapYear> {
-  Future<bool> _onWillPop() async {
+
+
+  DateTime selectedToDate = DateTime.now();
+  DateTime now = DateTime.now();
+
+   _onWillPop() async {
     return (await showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -18,15 +24,22 @@ class _LeapYearState extends State<LeapYear> {
             elevation: 2.0,
             actions: <Widget>[
               Column(
-                children: const <Widget>[
+                children:  <Widget>[
                   Center(
-                      child: Text(
+                      child: InkWell(
+                        onTap:(){
+                          Share.share(
+                              'check out my website https://protocoderspoint.com/',
+                              subject: 'Sharing on Email');
+                        } ,
+                        child: const Text(
                     "Share",
                     style: TextStyle(fontSize: 15, color: Colors.grey),
-                  )),
-                  Text("Rate it"),
-                  Text("FeedBack"),
-                  Text("More Apps")
+                  ),
+                      )),
+                  const Text("Rate it"),
+                  const Text("FeedBack"),
+                  const Text("More Apps")
                 ],
               ),
             ],
@@ -34,6 +47,21 @@ class _LeapYearState extends State<LeapYear> {
         )) ??
         false;
   }
+
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedToDate,
+        firstDate: DateTime(now.year),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedToDate) {
+      setState(() {
+        selectedToDate = picked;
+      });
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -97,8 +125,11 @@ class _LeapYearState extends State<LeapYear> {
                     height: 50,
                     width: double.infinity,
                     child: TextFormField(
+
                       style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
                       decoration: InputDecoration(
+                        hintText: "${selectedToDate.year}".split(' ')[0],
+                        hintStyle: const TextStyle(color: Colors.white),
                         labelStyle: const TextStyle(
                           color: Colors.white,
                         ),
@@ -148,9 +179,9 @@ class _LeapYearState extends State<LeapYear> {
                               const SizedBox(
                                 width: 50,
                               ),
-                              const Text(
-                                "0",
-                                style: TextStyle(
+                               Text(
+                                "${DateTime.now().month}",
+                                style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),

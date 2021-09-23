@@ -1,5 +1,6 @@
 import 'package:age_calculator/utils/color/color.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class AgeCalculator extends StatefulWidget {
   const AgeCalculator({Key? key}) : super(key: key);
@@ -47,7 +48,11 @@ class _AgeCalculatorState extends State<AgeCalculator> {
           title: const Center(child: Text("      Age Calculator")),
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Share.share(
+                      'check out my website https://protocoderspoint.com/',
+                      subject: 'Sharing on Email');
+                },
                 icon: const Icon(
                   Icons.share_rounded,
                   color: Colors.white,
@@ -76,7 +81,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                         fontWeight: FontWeight.bold),
                   ),
                   const Text(
-                    "Mon",
+                    "mon",
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
@@ -184,15 +189,21 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    ElevatedButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Calculate",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        )),
+                    // ElevatedButton(
+                    //     onPressed: () {
+                    //
+                    //     },
+                    //     child: const Text(
+                    //       "Calculate",
+                    //       style: TextStyle(
+                    //           color: Colors.white,
+                    //           fontSize: 20,
+                    //           fontWeight: FontWeight.bold),
+                    //     )),
+                    const SizedBox(
+
+                      width: 25,
+                    ),
                     ElevatedButton(
                       onPressed: () {},
                       child: const Text(
@@ -207,12 +218,10 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+
             Padding(
               padding:
-                  const EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
+                  const EdgeInsets.only(left: 15, right: 15, bottom: 5,),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -252,9 +261,9 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text(
-                                "0",
-                                style: TextStyle(
+                              Text(
+                                "${selectedToDate.year - dateOfBirth.year}",
+                                style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
@@ -276,9 +285,10 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text(
-                                "0",
-                                style: TextStyle(
+                              Text(
+                                "${dateOfBirth.month - selectedToDate.month}"
+                                    .replaceAll('-', ''),
+                                style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
@@ -300,9 +310,10 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text(
-                                "0",
-                                style: TextStyle(
+                              Text(
+                                "${dateOfBirth.day - selectedToDate.day}"
+                                    .replaceAll('-', ''),
+                                style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
@@ -358,9 +369,10 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text(
-                                "0",
-                                style: TextStyle(
+                              Text(
+                                "${selectedToDate.month - DateTime.monthsPerYear }"
+                                    .replaceAll('-', ''),
+                                style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
@@ -382,9 +394,10 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text(
-                                "0",
-                                style: TextStyle(
+                              Text(
+                                "${selectedToDate.day - dateOfBirth.day}"
+                                    .replaceAll('-', ''),
+                                style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
@@ -443,9 +456,9 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                                 const SizedBox(
                                   width: 30,
                                 ),
-                                const Text(
-                                  "0",
-                                  style: TextStyle(
+                                Text(
+                                  "${selectedToDate.year - dateOfBirth.year}",
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
@@ -469,11 +482,12 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               const SizedBox(
                                 width: 30,
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 10),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  "0",
-                                  style: TextStyle(
+                                  "${((selectedToDate.year - dateOfBirth.year) * 12) +selectedToDate.month - dateOfBirth.month }"
+                                  "",
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
@@ -497,11 +511,11 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               const SizedBox(
                                 width: 30,
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 10),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  "0",
-                                  style: TextStyle(
+                                  "${selectedToDate.difference(dateOfBirth).inDays}",
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
@@ -525,11 +539,11 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               const SizedBox(
                                 width: 22,
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 10),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  "0",
-                                  style: TextStyle(
+                                  "${selectedToDate.difference(dateOfBirth).inHours}",
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
@@ -553,11 +567,11 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               const SizedBox(
                                 width: 30,
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 10),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  "0",
-                                  style: TextStyle(
+                                  "${selectedToDate.difference(dateOfBirth).inMinutes}",
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
@@ -577,9 +591,9 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               const SizedBox(
                                 width: 30,
                               ),
-                              const Text(
-                                "0",
-                                style: TextStyle(
+                              Text(
+                                "${selectedToDate.difference(dateOfBirth).inSeconds}",
+                                style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
@@ -597,5 +611,11 @@ class _AgeCalculatorState extends State<AgeCalculator> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    dateOfBirth;
+    selectedToDate;
   }
 }

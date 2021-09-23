@@ -9,24 +9,48 @@ class AgeDifference extends StatefulWidget {
 }
 
 class _AgeDifferenceState extends State<AgeDifference> {
-  DateTime dateOfBirth = DateTime.now();
+
+  TextEditingController firstPerson = TextEditingController();
+  TextEditingController secondPerson = TextEditingController();
+
+  DateTime firstPersonDate = DateTime.now();
+  DateTime secondPersonDate = DateTime.now();
   DateTime now = DateTime.now();
-  Future<void> dateBirth(BuildContext context) async {
+  Future<void> dateBirthFirst(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: dateOfBirth,
+        initialDate: firstPersonDate,
         firstDate: DateTime(1900, 1),
         lastDate: DateTime(2101));
-    if (picked != null && picked != dateOfBirth) {
+    if (picked != null && picked != firstPersonDate) {
       setState(() {
-        dateOfBirth = picked;
+        firstPersonDate = picked;
+      });
+    }
+  }
+  Future<void> dateBirthSecond(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: secondPersonDate,
+        firstDate: DateTime(1900, 1),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != secondPersonDate) {
+      setState(() {
+        secondPersonDate = picked;
       });
     }
   }
 
+  calculateResult(){
+
+    String firstName = firstPerson.text;
+    String secondName = secondPerson.text;
 
 
 
+
+
+  }
 
 
   @override
@@ -73,6 +97,7 @@ class _AgeDifferenceState extends State<AgeDifference> {
                   height: 45,
                   width: double.infinity,
                   child: TextFormField(
+                    controller: firstPerson,
                     decoration: InputDecoration(
                       labelText: "Enter Name",
                       labelStyle: const TextStyle(
@@ -110,7 +135,7 @@ class _AgeDifferenceState extends State<AgeDifference> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "${dateOfBirth.toLocal()}".split(' ')[0],
+                          "${firstPersonDate.toLocal()}".split(' ')[0],
                           style:
                           const TextStyle(color: Colors.white, fontSize: 25),
                         ),
@@ -118,7 +143,7 @@ class _AgeDifferenceState extends State<AgeDifference> {
                           width: 103,
                         ),
                         IconButton(
-                          onPressed: () => dateBirth(context),
+                          onPressed: () => dateBirthFirst(context),
                           icon: const Icon(
                             Icons.calendar_today_outlined,
                             color: Colors.white,
@@ -145,6 +170,7 @@ class _AgeDifferenceState extends State<AgeDifference> {
                   height: 45,
                   width: double.infinity,
                   child: TextFormField(
+                    controller: secondPerson,
                     decoration: InputDecoration(
                       labelText: "Enter Name",
                       labelStyle: const TextStyle(
@@ -182,7 +208,7 @@ class _AgeDifferenceState extends State<AgeDifference> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "${dateOfBirth.toLocal()}".split(' ')[0],
+                          "${secondPersonDate.toLocal()}".split(' ')[0],
                           style:
                           const TextStyle(color: Colors.white, fontSize: 25),
                         ),
@@ -190,7 +216,7 @@ class _AgeDifferenceState extends State<AgeDifference> {
                           width: 103,
                         ),
                         IconButton(
-                          onPressed: () => dateBirth(context),
+                          onPressed: () => dateBirthSecond(context),
                           icon: const Icon(
                             Icons.calendar_today_outlined,
                             color: Colors.white,
@@ -214,7 +240,11 @@ class _AgeDifferenceState extends State<AgeDifference> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+
+
+
+                          },
                           child: const Text(
                             "Calculate",
                             style: TextStyle(
@@ -240,6 +270,11 @@ class _AgeDifferenceState extends State<AgeDifference> {
                 padding: const EdgeInsets.only(
                     left: 15, right: 15, bottom: 5, top: 0),
                 child: Container(
+
+
+
+
+
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(10),
