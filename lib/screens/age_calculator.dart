@@ -2,6 +2,7 @@ import 'package:age_calculator/utils/color/color.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
+
 class AgeCalculator extends StatefulWidget {
   const AgeCalculator({Key? key}) : super(key: key);
 
@@ -177,18 +178,18 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Container(
-                height: 45,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  //border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
+            // Padding(
+            //   padding: const EdgeInsets.all(15.0),
+            //   child: Container(
+            //     height: 45,
+            //     width: double.infinity,
+            //     decoration: BoxDecoration(
+            //       //border: Border.all(color: Colors.white),
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: <Widget>[
                     // ElevatedButton(
                     //     onPressed: () {
                     //
@@ -200,24 +201,24 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                     //           fontSize: 20,
                     //           fontWeight: FontWeight.bold),
                     //     )),
-                    const SizedBox(
-
-                      width: 25,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Clear",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                    // const SizedBox(
+                    //
+                    //   width: 25,
+                    // ),
+                    // ElevatedButton(
+                    //   onPressed: () {},
+                    //   child: const Text(
+                    //     "Clear",
+                    //     style: TextStyle(
+                    //         color: Colors.white,
+                    //         fontSize: 20,
+                    //         fontWeight: FontWeight.bold),
+                    //   ),
+                    // ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
 
             Padding(
               padding:
@@ -370,7 +371,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                                 height: 10,
                               ),
                               Text(
-                                "${selectedToDate.month - DateTime.monthsPerYear }"
+                                "${dateOfBirth.month - selectedToDate.month }"
                                     .replaceAll('-', ''),
                                 style: const TextStyle(
                                     fontSize: 20,

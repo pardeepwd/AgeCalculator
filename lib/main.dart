@@ -1,32 +1,32 @@
-import 'package:age_calculator/screens/add_subtract_day.dart';
-import 'package:age_calculator/screens/age_calculator.dart';
-import 'package:age_calculator/screens/age_difference.dart';
 import 'package:age_calculator/screens/home_page.dart';
-import 'package:age_calculator/screens/leap_year.dart';
-import 'package:age_calculator/screens/working_days_dates.dart';
 import 'package:flutter/material.dart';
-void main(){
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+void main() {
   runApp(const MyApp());
 }
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return   MaterialApp(
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
+  Future<InitializationStatus> initGoogleMobileAds() {
+    return MobileAds.instance.initialize();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-      //  primarySwatch: Colors.blue,
+        //  primarySwatch: Colors.blue,
         unselectedWidgetColor: Colors.grey, // <-- your color
       ),
-
-
-      home: const HomePage(),
-
-
-
+      home:  const HomePage(),
     );
   }
 }

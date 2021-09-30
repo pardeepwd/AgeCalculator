@@ -27,7 +27,11 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  google_mobile_ads: ^0.12.1
+  jiffy: ^4.1.0
   share: ^2.0.4
+  date_utils: ^0.2.0
+  quiver: ^3.0.1
 
   flutter:
     sdk: flutter
@@ -39,6 +43,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
+
   flutter_test:
     sdk: flutter
 

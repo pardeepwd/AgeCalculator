@@ -1,5 +1,6 @@
 import 'package:age_calculator/utils/color/color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class AgeDifference extends StatefulWidget {
   const AgeDifference({Key? key}) : super(key: key);
@@ -9,13 +10,13 @@ class AgeDifference extends StatefulWidget {
 }
 
 class _AgeDifferenceState extends State<AgeDifference> {
-
   TextEditingController firstPerson = TextEditingController();
   TextEditingController secondPerson = TextEditingController();
 
   DateTime firstPersonDate = DateTime.now();
   DateTime secondPersonDate = DateTime.now();
   DateTime now = DateTime.now();
+
   Future<void> dateBirthFirst(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
@@ -28,6 +29,7 @@ class _AgeDifferenceState extends State<AgeDifference> {
       });
     }
   }
+
   Future<void> dateBirthSecond(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
@@ -41,17 +43,70 @@ class _AgeDifferenceState extends State<AgeDifference> {
     }
   }
 
-  calculateResult(){
-
+  Widget calculateResult() {
     String firstName = firstPerson.text;
     String secondName = secondPerson.text;
 
-
-
-
-
+    if (firstPersonDate.year <= secondPersonDate.year) {
+      return Column(
+        children: <Widget>[
+          Text(
+            "$firstName" " " "is",
+            style: const TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            "${firstPersonDate.year - secondPersonDate.year} " "Years"
+                .replaceAll('-', '  '),
+            style: const TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          Text(
+            "${firstPersonDate.month - secondPersonDate.month} " "Months"
+                .replaceAll(('-'), '  '),
+            style: const TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          Text(
+            " ${firstPersonDate.day - secondPersonDate.day}" "Days"
+                .replaceAll(('-'), '  '),
+            style: const TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          Text(
+            " Older than " "$secondName",
+            style: const TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold),
+          ),
+        ],
+      );
+    } else {
+      return Column(
+        children: <Widget>[
+          Text(
+            "$secondName" " " "is",
+            style: const TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            "${firstPersonDate.year - secondPersonDate.year} " "Years"
+                .replaceAll('-', '  '),
+            style: const TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          Text(
+            "${firstPersonDate.month - secondPersonDate.month} " "Months"
+                .replaceAll(('-'), '  '),
+            style: const TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          Text(
+            " ${firstPersonDate.day - secondPersonDate.day}" "Days"
+                .replaceAll(('-'), '  '),
+            style: const TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          Text(
+            " Older than " "$firstName",
+            style: const TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold),
+          ),
+        ],
+      );
+    }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +137,7 @@ class _AgeDifferenceState extends State<AgeDifference> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 15,bottom: 8,right: 230),
+                padding: const EdgeInsets.only(left: 15, bottom: 8, right: 230),
                 child: Text(
                   "First Person",
                   style: TextStyle(
@@ -92,11 +147,13 @@ class _AgeDifferenceState extends State<AgeDifference> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15, top: 5,bottom: 8),
+                padding: const EdgeInsets.only(
+                    left: 15, right: 15, top: 5, bottom: 8),
                 child: SizedBox(
                   height: 45,
                   width: double.infinity,
                   child: TextFormField(
+                    style: const TextStyle(color: Colors.white),
                     controller: firstPerson,
                     decoration: InputDecoration(
                       labelText: "Enter Name",
@@ -136,8 +193,8 @@ class _AgeDifferenceState extends State<AgeDifference> {
                       children: [
                         Text(
                           "${firstPersonDate.toLocal()}".split(' ')[0],
-                          style:
-                          const TextStyle(color: Colors.white, fontSize: 25),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 25),
                         ),
                         const SizedBox(
                           width: 103,
@@ -155,7 +212,8 @@ class _AgeDifferenceState extends State<AgeDifference> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 15,bottom: 8,right: 205,top: 8),
+                padding: const EdgeInsets.only(
+                    left: 15, bottom: 8, right: 205, top: 8),
                 child: Text(
                   "Second Person",
                   style: TextStyle(
@@ -165,13 +223,16 @@ class _AgeDifferenceState extends State<AgeDifference> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15, top: 5,bottom: 8),
+                padding: const EdgeInsets.only(
+                    left: 15, right: 15, top: 5, bottom: 8),
                 child: SizedBox(
                   height: 45,
                   width: double.infinity,
                   child: TextFormField(
+                    style: const TextStyle(color: Colors.white),
                     controller: secondPerson,
                     decoration: InputDecoration(
+
                       labelText: "Enter Name",
                       labelStyle: const TextStyle(
                         color: Colors.white,
@@ -209,8 +270,8 @@ class _AgeDifferenceState extends State<AgeDifference> {
                       children: [
                         Text(
                           "${secondPersonDate.toLocal()}".split(' ')[0],
-                          style:
-                          const TextStyle(color: Colors.white, fontSize: 25),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 25),
                         ),
                         const SizedBox(
                           width: 103,
@@ -241,9 +302,8 @@ class _AgeDifferenceState extends State<AgeDifference> {
                     children: <Widget>[
                       ElevatedButton(
                           onPressed: () {
-
-
-
+                            isCalculate = true;
+                            setState(() {});
                           },
                           child: const Text(
                             "Calculate",
@@ -253,7 +313,10 @@ class _AgeDifferenceState extends State<AgeDifference> {
                                 fontWeight: FontWeight.bold),
                           )),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          isCalculate = false;
+                          setState(() {});
+                        },
                         child: const Text(
                           "Clear",
                           style: TextStyle(
@@ -270,24 +333,25 @@ class _AgeDifferenceState extends State<AgeDifference> {
                 padding: const EdgeInsets.only(
                     left: 15, right: 15, bottom: 5, top: 0),
                 child: Container(
-
-
-
-
-
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  height: 200,
+                  height: 250,
                   width: double.infinity,
+                  child: isCalculate
+                      ? Center(
+                          child: calculateResult(),
+                        )
+                      : const SizedBox(),
                 ),
               ),
-
             ],
           ),
         ),
       ),
     );
   }
+
+  bool isCalculate = false;
 }

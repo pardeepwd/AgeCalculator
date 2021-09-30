@@ -1,5 +1,6 @@
 import 'package:age_calculator/utils/color/color.dart';
 import 'package:flutter/material.dart';
+import 'package:quiver/time.dart';
 import 'package:share/share.dart';
 
 class LeapYear extends StatefulWidget {
@@ -10,12 +11,11 @@ class LeapYear extends StatefulWidget {
 }
 
 class _LeapYearState extends State<LeapYear> {
-
-
   DateTime selectedToDate = DateTime.now();
+
   DateTime now = DateTime.now();
 
-   _onWillPop() async {
+  _onWillPop() async {
     return (await showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -24,22 +24,25 @@ class _LeapYearState extends State<LeapYear> {
             elevation: 2.0,
             actions: <Widget>[
               Column(
-                children:  <Widget>[
+                children: <Widget>[
                   Center(
                       child: InkWell(
-                        onTap:(){
-                          Share.share(
-                              'check out my website https://protocoderspoint.com/',
-                              subject: 'Sharing on Email');
-                        } ,
-                        child: const Text(
-                    "Share",
-                    style: TextStyle(fontSize: 15, color: Colors.grey),
-                  ),
-                      )),
-                  const Text("Rate it"),
-                  const Text("FeedBack"),
-                  const Text("More Apps")
+                    onTap: () {
+                      Share.share(
+                          'check out my website https://protocoderspoint.com/',
+                          subject: 'Sharing on Email');
+                    },
+                    child: const Text(
+                      "Share",
+                      style: TextStyle(fontSize: 15, color: Colors.grey),
+                    ),
+                  )),
+                  const Text("Rate it",
+                    style: TextStyle(fontSize: 15, color: Colors.grey),),
+                  const Text("FeedBack",
+                    style: TextStyle(fontSize: 15, color: Colors.grey),),
+                  const Text("More Apps",
+                    style: TextStyle(fontSize: 15, color: Colors.grey),)
                 ],
               ),
             ],
@@ -52,7 +55,7 @@ class _LeapYearState extends State<LeapYear> {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedToDate,
-        firstDate: DateTime(now.year),
+        firstDate: DateTime(1990,1),
         lastDate: DateTime(2101));
     if (picked != null && picked != selectedToDate) {
       setState(() {
@@ -61,7 +64,22 @@ class _LeapYearState extends State<LeapYear> {
     }
   }
 
+  Widget leapYear() {
+    if (selectedToDate.year % 4 == 0 && selectedToDate.year % 100 != 0 ||
+        selectedToDate.year % 400 == 0) {
+      return const Text(
+        "Yes",
+        style: TextStyle(color: Colors.white),
+      );
+    } else {
+      return const Text(
+        "No",
+        style: TextStyle(color: Colors.white),
+      );
+    }
+  }
 
+  bool isleapYear = true;
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +99,10 @@ class _LeapYearState extends State<LeapYear> {
             actions: [
               IconButton(
                   onPressed: () {
+                    var date = selectedToDate.year;
                     _onWillPop();
+                    leapYear();
+                    print(date);
                   },
                   icon: const Icon(
                     Icons.menu,
@@ -93,7 +114,11 @@ class _LeapYearState extends State<LeapYear> {
               padding: const EdgeInsets.all(8.0),
               child: Column(children: <Widget>[
                 const Padding(
-                  padding: EdgeInsets.only(left: 15, right: 15, top: 5,),
+                  padding: EdgeInsets.only(
+                    left: 15,
+                    right: 15,
+                    top: 5,
+                  ),
                   child: SizedBox(
                     height: 100,
                     width: double.infinity,
@@ -120,38 +145,48 @@ class _LeapYearState extends State<LeapYear> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15, top: 5,),
-                  child: SizedBox(
-                    height: 50,
+                  padding: const EdgeInsets.only(
+                    left: 15,
+                    right: 15,
+                    top: 5,
+                  ),
+                  child: Container(
+                    height: 45,
                     width: double.infinity,
-                    child: TextFormField(
-
-                      style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
-                      decoration: InputDecoration(
-                        hintText: "${selectedToDate.year}".split(' ')[0],
-                        hintStyle: const TextStyle(color: Colors.white),
-                        labelStyle: const TextStyle(
-                          color: Colors.white,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "${selectedToDate.year}".split(' ')[0],
+                            style:
+                            const TextStyle(color: Colors.white, fontSize: 25),
+                          ),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
+                        const SizedBox(width: 190,),
+                        IconButton(
+                          onPressed: () => selectDate(context),
+                          icon: const Icon(
+                            Icons.calendar_today_outlined,
                             color: Colors.white,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.white,
-                          ),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
+                      ],
+                      //
                     ),
                   ),
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 15, top: 15,),
+                  padding: const EdgeInsets.only(
+                    left: 15,
+                    right: 15,
+                    top: 15,
+                  ),
                   child: Container(
                     height: 100,
                     width: double.infinity,
@@ -179,8 +214,8 @@ class _LeapYearState extends State<LeapYear> {
                               const SizedBox(
                                 width: 50,
                               ),
-                               Text(
-                                "${DateTime.now().month}",
+                              Text(
+                                "${daysInMonth(selectedToDate.year, 1)}",
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
@@ -210,12 +245,8 @@ class _LeapYearState extends State<LeapYear> {
                               const SizedBox(
                                 width: 50,
                               ),
-                              const Text(
-                                "0",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
+                              Container(
+                                child: isleapYear ? leapYear() : const Text(""),
                               ),
                             ],
                           ),
@@ -225,8 +256,8 @@ class _LeapYearState extends State<LeapYear> {
                   ),
                 ),
                 Padding(
-                  padding:
-                  const EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
+                  padding: const EdgeInsets.only(
+                      left: 15, right: 15, bottom: 5, top: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -256,7 +287,7 @@ class _LeapYearState extends State<LeapYear> {
                             children: [
                               Padding(
                                 padding:
-                                const EdgeInsets.only(left: 40, bottom: 10),
+                                    const EdgeInsets.only(left: 40, bottom: 10),
                                 child: Row(
                                   children: <Widget>[
                                     Text(
@@ -282,8 +313,8 @@ class _LeapYearState extends State<LeapYear> {
                               Row(
                                 children: <Widget>[
                                   Padding(
-                                    padding:
-                                    const EdgeInsets.only(left: 38, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 38, bottom: 10),
                                     child: Text(
                                       "January",
                                       style: TextStyle(
@@ -295,11 +326,11 @@ class _LeapYearState extends State<LeapYear> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  const Padding(
-                                    padding: EdgeInsets.only(bottom: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
                                     child: Text(
-                                      "0",
-                                      style: TextStyle(
+                                      "${daysInMonth(selectedToDate.year, 1)}",
+                                      style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
@@ -310,8 +341,8 @@ class _LeapYearState extends State<LeapYear> {
                               Row(
                                 children: <Widget>[
                                   Padding(
-                                    padding:
-                                    const EdgeInsets.only(left: 30, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 30, bottom: 10),
                                     child: Text(
                                       "February",
                                       style: TextStyle(
@@ -323,11 +354,11 @@ class _LeapYearState extends State<LeapYear> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  const Padding(
-                                    padding: EdgeInsets.only(bottom: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
                                     child: Text(
-                                      "0",
-                                      style: TextStyle(
+                                      "${daysInMonth(selectedToDate.year, 2)}",
+                                      style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
@@ -338,8 +369,8 @@ class _LeapYearState extends State<LeapYear> {
                               Row(
                                 children: <Widget>[
                                   Padding(
-                                    padding:
-                                    const EdgeInsets.only(left: 50, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 50, bottom: 10),
                                     child: Text(
                                       "March",
                                       style: TextStyle(
@@ -351,11 +382,11 @@ class _LeapYearState extends State<LeapYear> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  const Padding(
-                                    padding: EdgeInsets.only(bottom: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
                                     child: Text(
-                                      "0",
-                                      style: TextStyle(
+                                      "${daysInMonth(selectedToDate.year, 3)}",
+                                      style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
@@ -366,8 +397,8 @@ class _LeapYearState extends State<LeapYear> {
                               Row(
                                 children: <Widget>[
                                   Padding(
-                                    padding:
-                                    const EdgeInsets.only(left: 65, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 65, bottom: 10),
                                     child: Text(
                                       "April",
                                       style: TextStyle(
@@ -379,11 +410,11 @@ class _LeapYearState extends State<LeapYear> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  const Padding(
-                                    padding: EdgeInsets.only(bottom: 10),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
                                     child: Text(
-                                      "0",
-                                      style: TextStyle(
+                                      "${daysInMonth(selectedToDate.year, 4)}",
+                                      style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white),
@@ -394,7 +425,8 @@ class _LeapYearState extends State<LeapYear> {
                               Row(
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 68, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 68, bottom: 10),
                                     child: Text(
                                       "May",
                                       style: TextStyle(
@@ -406,9 +438,9 @@ class _LeapYearState extends State<LeapYear> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "0",
-                                    style: TextStyle(
+                                  Text(
+                                    "${daysInMonth(selectedToDate.year, 5)}",
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
@@ -418,7 +450,8 @@ class _LeapYearState extends State<LeapYear> {
                               Row(
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 60, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 60, bottom: 10),
                                     child: Text(
                                       "June",
                                       style: TextStyle(
@@ -430,9 +463,9 @@ class _LeapYearState extends State<LeapYear> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "0",
-                                    style: TextStyle(
+                                  Text(
+                                    "${daysInMonth(selectedToDate.year, 6)}",
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
@@ -442,7 +475,8 @@ class _LeapYearState extends State<LeapYear> {
                               Row(
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 72, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 72, bottom: 10),
                                     child: Text(
                                       "july",
                                       style: TextStyle(
@@ -454,9 +488,9 @@ class _LeapYearState extends State<LeapYear> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "0",
-                                    style: TextStyle(
+                                  Text(
+                                    "${daysInMonth(selectedToDate.year, 7)}",
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
@@ -466,7 +500,8 @@ class _LeapYearState extends State<LeapYear> {
                               Row(
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 40, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 40, bottom: 10),
                                     child: Text(
                                       "August",
                                       style: TextStyle(
@@ -478,9 +513,9 @@ class _LeapYearState extends State<LeapYear> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "0",
-                                    style: TextStyle(
+                                  Text(
+                                    "${daysInMonth(selectedToDate.year, 8)}",
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
@@ -490,7 +525,8 @@ class _LeapYearState extends State<LeapYear> {
                               Row(
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 5, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 5, bottom: 10),
                                     child: Text(
                                       "September",
                                       style: TextStyle(
@@ -502,9 +538,9 @@ class _LeapYearState extends State<LeapYear> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "0",
-                                    style: TextStyle(
+                                  Text(
+                                    "${daysInMonth(selectedToDate.year, 9)}",
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
@@ -514,7 +550,8 @@ class _LeapYearState extends State<LeapYear> {
                               Row(
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 32, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 32, bottom: 10),
                                     child: Text(
                                       "October",
                                       style: TextStyle(
@@ -526,9 +563,9 @@ class _LeapYearState extends State<LeapYear> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "0",
-                                    style: TextStyle(
+                                  Text(
+                                    "${daysInMonth(selectedToDate.year, 10)}",
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
@@ -538,7 +575,8 @@ class _LeapYearState extends State<LeapYear> {
                               Row(
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 10, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 10, bottom: 10),
                                     child: Text(
                                       "November",
                                       style: TextStyle(
@@ -550,9 +588,9 @@ class _LeapYearState extends State<LeapYear> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "0",
-                                    style: TextStyle(
+                                  Text(
+                                    "${daysInMonth(selectedToDate.year, 11)}",
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
@@ -562,7 +600,8 @@ class _LeapYearState extends State<LeapYear> {
                               Row(
                                 children: <Widget>[
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 10, bottom: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 10, bottom: 10),
                                     child: Text(
                                       "December",
                                       style: TextStyle(
@@ -574,9 +613,9 @@ class _LeapYearState extends State<LeapYear> {
                                   const SizedBox(
                                     width: 30,
                                   ),
-                                  const Text(
-                                    "0",
-                                    style: TextStyle(
+                                  Text(
+                                    "${daysInMonth(selectedToDate.year, 12)}",
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white),
@@ -590,9 +629,6 @@ class _LeapYearState extends State<LeapYear> {
                     ],
                   ),
                 ),
-
-
-
               ])),
         ));
   }

@@ -1,9 +1,11 @@
+import 'package:age_calculator/google_ads/ad_helper.dart';
 import 'package:age_calculator/screens/working_days_dates.dart';
 import 'package:age_calculator/utils/color/color.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:share/share.dart';
-
 import 'add_subtract_day.dart';
+import 'add_view_members.dart';
 import 'age_calculator.dart';
 import 'age_difference.dart';
 import 'leap_year.dart';
@@ -16,34 +18,66 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  InterstitialAd? _interstitialAd;
+  bool _isInterstitialAdReady = false;
+
+  void loadInterstitialAd() {
+    InterstitialAd.load(
+
+        adUnitId: AdHelper.interstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad){
+          this._interstitialAd = ad;
+
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+
+    onAdDismissedFullScreenContent: (ad){
+      HomePage();
+    },
+    );
+          _isInterstitialAdReady = true;
+
+    }, onAdFailedToLoad:(err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+          _isInterstitialAdReady = false;
+        }
+    )
+    );
+
+  }
+
+
+
   Future<bool> _onWillPop() async {
     return (await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
+      context: context,
+      builder: (context) =>
+          AlertDialog(
             backgroundColor: Colors.white,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
             elevation: 2.0,
             actions: <Widget>[
               Column(
-                children:  <Widget>[
+                children: <Widget>[
                   Center(
                       child: InkWell(
-                        onTap: (){
+                        onTap: () {
                           Share.share(
                               'check out my website https://protocoderspoint.com/',
                               subject: 'Sharing on Email');
                         },
-                    child: const Text(
-                      "Share",
-                      style: TextStyle(fontSize: 20, color: Colors.grey),
-                    ),
-                  )),
+                        child: const Text(
+                          "Share",
+                          style: TextStyle(fontSize: 20, color: Colors.grey),
+                        ),
+                      )),
                   const InkWell(
                       child: Text(
-                    "Rate it",
-                    style: TextStyle(fontSize: 20, color: Colors.grey),
-                  )),
+                        "Rate it",
+                        style: TextStyle(fontSize: 20, color: Colors.grey),
+                      )),
                   const InkWell(
                     child: Text(
                       "FeedBack",
@@ -60,7 +94,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-        )) ??
+    )) ??
         false;
   }
 
@@ -115,11 +149,12 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.only(left: 10, top: 10),
                             child: InkWell(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const AgeCalculator()));
+                                if (_isInterstitialAdReady) {
+                                  _interstitialAd?.show();
+                                } else {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AgeCalculator()));
+                                }
+
                               },
                               child: Text(
                                 "Age Calculator",
@@ -158,6 +193,10 @@ class _HomePageState extends State<HomePage> {
                             width: 20,
                           ),
                           InkWell(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => AddViewMembers()));
+                            },
                             child: Text(
                               "Add Family & Friends",
                               style: TextStyle(
@@ -214,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const AddSubtract()));
+                                      const AddSubtract()));
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(top: 13),
@@ -262,7 +301,7 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const WorkingDays()));
+                                        const WorkingDays()));
                               },
                               child: Text(
                                 "Working Days Between Dates",
@@ -303,7 +342,7 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const AgeDifference()));
+                                      const AgeDifference()));
                             },
                             child: Text(
                               "Age Difference",
