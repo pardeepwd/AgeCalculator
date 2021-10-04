@@ -1,8 +1,9 @@
+import 'package:age_calculator/google_ads/ad_helper.dart';
 import 'package:age_calculator/utils/color/color.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:share/share.dart';
-
-
+import 'package:intl/intl.dart';
 class AgeCalculator extends StatefulWidget {
   const AgeCalculator({Key? key}) : super(key: key);
 
@@ -11,19 +12,33 @@ class AgeCalculator extends StatefulWidget {
 }
 
 class _AgeCalculatorState extends State<AgeCalculator> {
+
+  BannerAd? bannerAd;
+  bool isBannerLoaded = false;
+
+
+
+
   DateTime selectedToDate = DateTime.now();
   DateTime dateOfBirth = DateTime.now();
   DateTime now = DateTime.now();
+  String date = DateFormat("yyyy-MM-dd").format(DateTime.now());
+
 
   Future<void> selectToDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedToDate,
-        firstDate: DateTime(now.year, now.month),
+        firstDate: DateTime(1900, 1),
         lastDate: DateTime(2101));
     if (picked != null && picked != selectedToDate) {
       setState(() {
         selectedToDate = picked;
+        String Onlydate = new DateFormat("yyyy-MM-dd").format(picked);
+
+        date = '$Onlydate';
+
+
       });
     }
   }
@@ -39,6 +54,53 @@ class _AgeCalculatorState extends State<AgeCalculator> {
         dateOfBirth = picked;
       });
     }
+  }
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        elevation: 2.0,
+        actions: <Widget>[
+          Column(
+            children: <Widget>[
+              Center(
+                  child: InkWell(
+                    onTap: () {
+                      Share.share(
+                          'check out my website https://protocoderspoint.com/',
+                          subject: 'Sharing on Email');
+                    },
+                    child: const Text(
+                      "",
+                      style: TextStyle(fontSize: 20, color: Colors.grey),
+                    ),
+                  )),
+              const InkWell(
+                  child: Text(
+                    "Rate it",
+                    style: TextStyle(fontSize: 20, color: Colors.grey),
+                  )),
+              const InkWell(
+                child: Text(
+                  "FeedBack",
+                  style: TextStyle(fontSize: 20, color: Colors.grey),
+                ),
+              ),
+              const InkWell(
+                child: Text(
+                  "More Apps",
+                  style: TextStyle(fontSize: 20, color: Colors.grey),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+    )) ??
+        false;
   }
 
   @override
@@ -59,7 +121,9 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                   color: Colors.white,
                 )),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  _onWillPop();
+                },
                 icon: const Icon(
                   Icons.calendar_today_outlined,
                   color: Colors.white,
@@ -70,7 +134,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
           children: <Widget>[
             Padding(
               padding:
-                  const EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
+              const EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -81,8 +145,8 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
-                  const Text(
-                    "mon",
+                   const Text(
+                    "",
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
@@ -107,7 +171,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                       Text(
                         "${selectedToDate.toLocal()}".split(' ')[0],
                         style:
-                            const TextStyle(color: Colors.white, fontSize: 25),
+                        const TextStyle(color: Colors.white, fontSize: 25),
                       ),
                       const SizedBox(
                         width: 110,
@@ -129,7 +193,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
+              const EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -161,7 +225,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                       Text(
                         "${dateOfBirth.toLocal()}".split(' ')[0],
                         style:
-                            const TextStyle(color: Colors.white, fontSize: 25),
+                        const TextStyle(color: Colors.white, fontSize: 25),
                       ),
                       const SizedBox(
                         width: 122,
@@ -190,31 +254,31 @@ class _AgeCalculatorState extends State<AgeCalculator> {
             //     child: Row(
             //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
             //       children: <Widget>[
-                    // ElevatedButton(
-                    //     onPressed: () {
-                    //
-                    //     },
-                    //     child: const Text(
-                    //       "Calculate",
-                    //       style: TextStyle(
-                    //           color: Colors.white,
-                    //           fontSize: 20,
-                    //           fontWeight: FontWeight.bold),
-                    //     )),
-                    // const SizedBox(
-                    //
-                    //   width: 25,
-                    // ),
-                    // ElevatedButton(
-                    //   onPressed: () {},
-                    //   child: const Text(
-                    //     "Clear",
-                    //     style: TextStyle(
-                    //         color: Colors.white,
-                    //         fontSize: 20,
-                    //         fontWeight: FontWeight.bold),
-                    //   ),
-                    // ),
+            // ElevatedButton(
+            //     onPressed: () {
+            //
+            //     },
+            //     child: const Text(
+            //       "Calculate",
+            //       style: TextStyle(
+            //           color: Colors.white,
+            //           fontSize: 20,
+            //           fontWeight: FontWeight.bold),
+            //     )),
+            // const SizedBox(
+            //
+            //   width: 25,
+            // ),
+            // ElevatedButton(
+            //   onPressed: () {},
+            //   child: const Text(
+            //     "Clear",
+            //     style: TextStyle(
+            //         color: Colors.white,
+            //         fontSize: 20,
+            //         fontWeight: FontWeight.bold),
+            //   ),
+            // ),
             //       ],
             //     ),
             //   ),
@@ -222,7 +286,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
 
             Padding(
               padding:
-                  const EdgeInsets.only(left: 15, right: 15, bottom: 5,),
+              const EdgeInsets.only(left: 15, right: 15, bottom: 5,),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -330,7 +394,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
+              const EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -414,7 +478,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
+              const EdgeInsets.only(left: 15, right: 15, bottom: 5, top: 5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -444,7 +508,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                         children: [
                           Padding(
                             padding:
-                                const EdgeInsets.only(left: 26, bottom: 10),
+                            const EdgeInsets.only(left: 26, bottom: 10),
                             child: Row(
                               children: <Widget>[
                                 Text(
@@ -471,7 +535,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                             children: <Widget>[
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(left: 7, bottom: 10),
+                                const EdgeInsets.only(left: 7, bottom: 10),
                                 child: Text(
                                   "Total months",
                                   style: TextStyle(
@@ -486,8 +550,10 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  "${((selectedToDate.year - dateOfBirth.year) * 12) +selectedToDate.month - dateOfBirth.month }"
-                                  "",
+                                  "${((selectedToDate.year - dateOfBirth.year) *
+                                      12) + selectedToDate.month -
+                                      dateOfBirth.month }"
+                                      "",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -500,7 +566,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                             children: <Widget>[
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(left: 34, bottom: 10),
+                                const EdgeInsets.only(left: 34, bottom: 10),
                                 child: Text(
                                   "Total days",
                                   style: TextStyle(
@@ -515,7 +581,9 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  "${selectedToDate.difference(dateOfBirth).inDays}",
+                                  "${selectedToDate
+                                      .difference(dateOfBirth)
+                                      .inDays}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -528,7 +596,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                             children: <Widget>[
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(left: 34, bottom: 10),
+                                const EdgeInsets.only(left: 34, bottom: 10),
                                 child: Text(
                                   "Total hours",
                                   style: TextStyle(
@@ -543,7 +611,9 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  "${selectedToDate.difference(dateOfBirth).inHours}",
+                                  "${selectedToDate
+                                      .difference(dateOfBirth)
+                                      .inHours}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -556,7 +626,7 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                             children: <Widget>[
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(left: 2, bottom: 10),
+                                const EdgeInsets.only(left: 2, bottom: 10),
                                 child: Text(
                                   "Total minutes",
                                   style: TextStyle(
@@ -571,7 +641,9 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  "${selectedToDate.difference(dateOfBirth).inMinutes}",
+                                  "${selectedToDate
+                                      .difference(dateOfBirth)
+                                      .inMinutes}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -593,7 +665,9 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                                 width: 30,
                               ),
                               Text(
-                                "${selectedToDate.difference(dateOfBirth).inSeconds}",
+                                "${selectedToDate
+                                    .difference(dateOfBirth)
+                                    .inSeconds}",
                                 style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -608,15 +682,53 @@ class _AgeCalculatorState extends State<AgeCalculator> {
                 ],
               ),
             ),
+            Container(
+              child: isBannerLoaded? Container(
+                child: AdWidget(ad: bannerAd! ),
+              ):const SizedBox(),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              height: 200,
+              width: double.infinity,
+            ),
           ],
         ),
       ),
     );
+
   }
 
   @override
   void dispose() {
     dateOfBirth;
     selectedToDate;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    bannerAd = BannerAd(
+      size: AdSize.banner,
+      adUnitId: AdHelper.bannerAdUnitId,
+      listener: BannerAdListener(
+          onAdLoaded: (ad){
+
+            setState(() {
+              isBannerLoaded = true;
+            });
+            print("AD IS LOADED");
+
+          },
+          onAdFailedToLoad: (ad, err){
+            ad.dispose();
+            print("AD IS NOT LOADED");
+          }
+
+      ),
+      request: AdRequest(),
+    );
+    bannerAd!.load();
   }
 }

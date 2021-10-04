@@ -1,9 +1,9 @@
-import 'package:age_calculator/google_ads/ad_helper.dart';
 import 'package:age_calculator/screens/working_days_dates.dart';
 import 'package:age_calculator/utils/color/color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:share/share.dart';
+
 import 'add_subtract_day.dart';
 import 'add_view_members.dart';
 import 'age_calculator.dart';
@@ -18,42 +18,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   InterstitialAd? _interstitialAd;
   bool _isInterstitialAdReady = false;
 
-  void loadInterstitialAd() {
-    InterstitialAd.load(
 
-        adUnitId: AdHelper.interstitialAdUnitId,
-        request: const AdRequest(),
-        adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad){
-          this._interstitialAd = ad;
-
-          ad.fullScreenContentCallback = FullScreenContentCallback(
-
-    onAdDismissedFullScreenContent: (ad){
-      HomePage();
-    },
-    );
-          _isInterstitialAdReady = true;
-
-    }, onAdFailedToLoad:(err) {
-          print('Failed to load an interstitial ad: ${err.message}');
-          _isInterstitialAdReady = false;
-        }
-    )
-    );
-
-  }
-
-
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   InterstitialAd.load(
+  //       adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+  //       request: const AdRequest(),
+  //       adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: (ad) {
+  //         setState(() {
+  //           _isInterstitialAdReady = true;
+  //           this._interstitialAd = ad;
+  //         });
+  //         print("Ad is loaded");
+  //       }, onAdFailedToLoad: (err) {
+  //         print("Failed to load the of google");
+  //       }));
+  // }
 
   Future<bool> _onWillPop() async {
     return (await showDialog(
-      context: context,
-      builder: (context) =>
-          AlertDialog(
+          context: context,
+          builder: (context) => AlertDialog(
             backgroundColor: Colors.white,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
@@ -63,21 +52,21 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   Center(
                       child: InkWell(
-                        onTap: () {
-                          Share.share(
-                              'check out my website https://protocoderspoint.com/',
-                              subject: 'Sharing on Email');
-                        },
-                        child: const Text(
-                          "Share",
-                          style: TextStyle(fontSize: 20, color: Colors.grey),
-                        ),
-                      )),
+                    onTap: () {
+                      Share.share(
+                          'check out my website https://protocoderspoint.com/',
+                          subject: 'Sharing on Email');
+                    },
+                    child: const Text(
+                      "Share",
+                      style: TextStyle(fontSize: 20, color: Colors.grey),
+                    ),
+                  )),
                   const InkWell(
                       child: Text(
-                        "Rate it",
-                        style: TextStyle(fontSize: 20, color: Colors.grey),
-                      )),
+                    "Rate it",
+                    style: TextStyle(fontSize: 20, color: Colors.grey),
+                  )),
                   const InkWell(
                     child: Text(
                       "FeedBack",
@@ -94,7 +83,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-    )) ??
+        )) ??
         false;
   }
 
@@ -149,12 +138,17 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.only(left: 10, top: 10),
                             child: InkWell(
                               onTap: () {
-                                if (_isInterstitialAdReady) {
-                                  _interstitialAd?.show();
-                                } else {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AgeCalculator()));
-                                }
 
+
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const AgeCalculator()));
+                                if (_isInterstitialAdReady) {
+                                  _interstitialAd!.show();
+
+                                } else {}
                               },
                               child: Text(
                                 "Age Calculator",
@@ -194,8 +188,14 @@ class _HomePageState extends State<HomePage> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => AddViewMembers()));
+                              if (_isInterstitialAdReady) {
+                                _interstitialAd!.show();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const AddViewMembers()));
+                              } else {}
                             },
                             child: Text(
                               "Add Family & Friends",
@@ -244,16 +244,19 @@ class _HomePageState extends State<HomePage> {
                               size: 30,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                      const AddSubtract()));
+                              if (_isInterstitialAdReady) {
+                                _interstitialAd!.show();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const AddSubtract()));
+                              } else {}
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(top: 13),
@@ -302,6 +305,14 @@ class _HomePageState extends State<HomePage> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                         const WorkingDays()));
+
+
+
+
+                                if (_isInterstitialAdReady) {
+                                  _interstitialAd!.show();
+
+                                } else {}
                               },
                               child: Text(
                                 "Working Days Between Dates",
@@ -338,11 +349,14 @@ class _HomePageState extends State<HomePage> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                      const AgeDifference()));
+                              if (_isInterstitialAdReady) {
+                                _interstitialAd!.show();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const AgeDifference()));
+                              } else {}
                             },
                             child: Text(
                               "Age Difference",
@@ -378,10 +392,14 @@ class _HomePageState extends State<HomePage> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const LeapYear()));
+                              if (_isInterstitialAdReady) {
+                                _interstitialAd!.show();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LeapYear()));
+                              } else {}
                             },
                             child: Text(
                               "Leap year",
@@ -407,14 +425,17 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 8,
               ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                height: 200,
-                width: double.infinity,
-              ),
+              // Container(
+              //   child: isBannerLoaded? Container(
+              //     child: AdWidget(ad: bannerAd! ),
+              //   ):const SizedBox(),
+              //   decoration: BoxDecoration(
+              //     border: Border.all(color: Colors.white),
+              //     borderRadius: BorderRadius.circular(10),
+              //   ),
+              //   height: 200,
+              //   width: double.infinity,
+              // ),
               const SizedBox(
                 height: 8,
               ),
@@ -441,5 +462,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _interstitialAd?.dispose();
+    super.dispose();
   }
 }

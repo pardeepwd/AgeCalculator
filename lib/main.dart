@@ -3,6 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() {
+
+
+
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+
+
+
+
   runApp(const MyApp());
 }
 
@@ -14,9 +23,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Future<InitializationStatus> initGoogleMobileAds() {
-    return MobileAds.instance.initialize();
-  }
+
+  // Future<InitializationStatus> _initGoogleMobileAds() {
+  //
+  //   return MobileAds.instance.initialize();
+  // }
+
+
 
   @override
   Widget build(BuildContext context) {

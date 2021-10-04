@@ -13,12 +13,32 @@ class _WorkingDaysState extends State<WorkingDays> {
   DateTime endDateOf = DateTime.now();
   DateTime now = DateTime.now();
   bool checkedValue = false;
+  int counter=0;
+
+  int totalDays = 0;
+  int workingDaysM = 0;
+  int workingDaysT = 0;
+  int workingDaysW = 0;
+  int workingDaysTh = 0;
+  int workingDaysF = 0;
+  int workingDaysS = 0;
+  int workingDaysSu = 0;
+  int totalWorkingDay = 0;
+  int nonWorkingDays = 0;
+
+  bool checkedValueMon = false;
+  bool checkedValueTue = false;
+  bool checkedValueWed = false;
+  bool checkedValueThu = false;
+  bool checkedValueFri = false;
+  bool checkedValueSat = false;
+  bool checkedValueSun = false;
 
   Future<void> startDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: startDateOf,
-        firstDate: DateTime(now.year, now.month),
+        firstDate: DateTime(1900, 1),
         lastDate: DateTime(2101));
     if (picked != null && picked != startDateOf) {
       setState(() {
@@ -40,42 +60,84 @@ class _WorkingDaysState extends State<WorkingDays> {
     }
   }
 
-  // List<ListModel>? dataList;
-  // List<String> userChecked = [];
-  // bool isChecked = false;
+  test() {
 
-  @override
-  void initState() {
-    super.initState();
 
-    // ListModel listModel = ListModel("Mon", false);
-    // ListModel listModel2 = ListModel("Tue", false);
-    // ListModel listModel3 = ListModel("Wed", false);
-    // ListModel listModel4 = ListModel("Thu", false);
-    // ListModel listModel5 = ListModel("Fri", false);
-    // ListModel listModel6 = ListModel("Sat", false);
-    // ListModel listModel7 = ListModel("Sun", false);
-    // dataList = [];
-    // dataList!.add(listModel);
-    // dataList!.add(listModel2);
-    // dataList!.add(listModel3);
-    // dataList!.add(listModel4);
-    // dataList!.add(listModel5);
-    // dataList!.add(listModel6);
-    // dataList!.add(listModel7);
+    for (int i = 0; i <= endDateOf.difference(startDateOf).inDays; i++) {
+
+      if(checkedValueMon == true){
+
+        counter++;
+
+      }else if( checkedValueTue == true){
+
+        counter++;
+      }else if(checkedValueWed == true){
+
+        counter++;
+      }else if( checkedValueThu == true){
+        counter++;
+
+      }else if( checkedValueFri == true){
+
+        counter++;
+      }else if(checkedValueSat == true){
+
+        counter++;
+      }else if(checkedValueSun == true){
+
+        counter++;
+
+      }
+
+
+
+
+
+    }
+
+    print(counter);
+
+
+
+    // setState(() {
+    //
+    //   totalWorkingDay = workingDaysM +
+    //       workingDaysT +
+    //       workingDaysW +
+    //       workingDaysTh +
+    //       workingDaysF +
+    //       workingDaysS +
+    //       workingDaysSu;
+    //   totalDays = startDateOf.difference(endDateOf).inDays;
+    //
+    //
+    // });
+    //
+    //
+    //
+    //
+    // if (checkedValueMon == true) {
+    //   workingDaysM = totalDays~/ 7;
+    //
+    // }  if (checkedValueTue == true) {
+    //   workingDaysT = totalDays ~/ 7;
+    //
+    // }  if (checkedValueWed = true) {
+    //   workingDaysW = totalDays ~/ 7;
+    // }  if (checkedValueThu == true) {
+    //   workingDaysTh = totalDays ~/ 7;
+    // }  if (checkedValueFri == true) {
+    //   workingDaysF = totalDays~/ 7;
+    // }  if (checkedValueSat == true) {
+    //   workingDaysS = totalDays ~/ 7;
+    // }  if (checkedValueSun == true) {
+    //   workingDaysSu = totalDays ~/ 7;
+    // }
+
+
+
   }
-
-  // void _onSelected(bool selected, String title) {
-  //   if (selected == true) {
-  //     setState(() {
-  //       userChecked.add(title);
-  //     });
-  //   } else {
-  //     setState(() {
-  //       userChecked.remove(title);
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -219,10 +281,10 @@ class _WorkingDaysState extends State<WorkingDays> {
                   border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                height: 200,
+                height: 180,
                 width: double.infinity,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(left: 10, top: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -233,31 +295,125 @@ class _WorkingDaysState extends State<WorkingDays> {
                             fontSize: 20,
                             color: AppColors.appPrimary),
                       ),
-                      // Row(
-                      //   children:<Widget> [
-                      //     Flexible(
-                      //       child: View.builder(
-                      //           itemCount: dataList?.length,
-                      //           itemBuilder: (BuildContext context, int index) {
-                      //             return  Row(
-                      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //                 children: [
-                      //                   Checkbox(
-                      //                       value: dataList?[index].value,
-                      //                       onChanged: (bool? value) {
-                      //                         setState(() {
-                      //                           dataList?[index].value = value!;
-                      //                           _onSelected(value!,
-                      //                               dataList![index].title.toString());
-                      //                         });
-                      //                       })
-                      //                 ],
-                      //               );
-                      //
-                      //           }),
-                      //     )
-                      //   ],
-                      // ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Row(
+                          children: <Widget>[
+                            Checkbox(
+                              value: checkedValueMon,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  checkedValueMon = newValue!;
+                                });
+                              },
+                            ),
+                            const Text(
+                              "Mon",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                            Checkbox(
+                              value: checkedValueTue,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  checkedValueTue = newValue!;
+                                });
+                              },
+                            ),
+                            const Text(
+                              "Tue",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                            Checkbox(
+                              value: checkedValueWed,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  checkedValueWed = newValue!;
+                                });
+                              },
+                            ),
+                            const Text(
+                              "Wed",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                            Checkbox(
+                              value: checkedValueThu,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  checkedValueThu = newValue!;
+                                });
+                              },
+                            ),
+                            const Text(
+                              "Thu",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Row(
+                          children: <Widget>[
+                            Checkbox(
+                              value: checkedValueFri,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  checkedValueFri = newValue!;
+                                });
+                              },
+                            ),
+                            const Text(
+                              "Fri",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                            Checkbox(
+                              value: checkedValueSat,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  checkedValueSat = newValue!;
+                                });
+                              },
+                            ),
+                            const Text(
+                              "Sat",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                            Checkbox(
+                              value: checkedValueSun,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  checkedValueSun = newValue!;
+                                });
+                              },
+                            ),
+                            const Text(
+                              "Sun",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -321,7 +477,9 @@ class _WorkingDaysState extends State<WorkingDays> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          test();
+                        },
                         child: const Text(
                           "Calculate",
                           style: TextStyle(
@@ -330,7 +488,13 @@ class _WorkingDaysState extends State<WorkingDays> {
                               fontWeight: FontWeight.bold),
                         )),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+
+
+
+
+
+                      },
                       child: const Text(
                         "Clear",
                         style: TextStyle(
@@ -388,9 +552,10 @@ class _WorkingDaysState extends State<WorkingDays> {
                                 const SizedBox(
                                   width: 30,
                                 ),
-                                const Text(
-                                  "0",
-                                  style: TextStyle(
+                                Text(
+                                  "${startDateOf.difference(endDateOf).inDays}"
+                                      .replaceAll('-', ' '),
+                                  style: const TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
@@ -414,11 +579,11 @@ class _WorkingDaysState extends State<WorkingDays> {
                               const SizedBox(
                                 width: 30,
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 10),
+                               Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  "0",
-                                  style: TextStyle(
+                                  "$totalWorkingDay".replaceAll('-', ' '),
+                                  style: const TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
@@ -441,11 +606,11 @@ class _WorkingDaysState extends State<WorkingDays> {
                               const SizedBox(
                                 width: 30,
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(bottom: 10),
+                               Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  "0",
-                                  style: TextStyle(
+                                  "${totalWorkingDay-totalDays}",
+                                  style: const TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
@@ -467,11 +632,13 @@ class _WorkingDaysState extends State<WorkingDays> {
                               ),
                             ],
                           ),
-
                           Row(
                             children: const <Widget>[
                               Padding(
-                                padding: EdgeInsets.only(left: 70,bottom: 10,),
+                                padding: EdgeInsets.only(
+                                  left: 70,
+                                  bottom: 10,
+                                ),
                                 child: Text(
                                   "Monday",
                                   style: TextStyle(
@@ -498,7 +665,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                           Row(
                             children: const <Widget>[
                               Padding(
-                                padding: EdgeInsets.only(left: 67,bottom: 10),
+                                padding: EdgeInsets.only(left: 67, bottom: 10),
                                 child: Text(
                                   "Tuesday",
                                   style: TextStyle(
@@ -525,7 +692,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                           Row(
                             children: const <Widget>[
                               Padding(
-                                padding: EdgeInsets.only(left: 43,bottom: 10),
+                                padding: EdgeInsets.only(left: 43, bottom: 10),
                                 child: Text(
                                   "Wednesday",
                                   style: TextStyle(
@@ -552,7 +719,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                           Row(
                             children: const <Widget>[
                               Padding(
-                                padding: EdgeInsets.only(left: 59,bottom: 10),
+                                padding: EdgeInsets.only(left: 59, bottom: 10),
                                 child: Text(
                                   "Thursday",
                                   style: TextStyle(
@@ -579,7 +746,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                           Row(
                             children: const <Widget>[
                               Padding(
-                                padding: EdgeInsets.only(left: 84,bottom: 10),
+                                padding: EdgeInsets.only(left: 84, bottom: 10),
                                 child: Text(
                                   "Friday",
                                   style: TextStyle(
@@ -606,7 +773,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                           Row(
                             children: const <Widget>[
                               Padding(
-                                padding: EdgeInsets.only(left: 62,bottom: 10),
+                                padding: EdgeInsets.only(left: 62, bottom: 10),
                                 child: Text(
                                   "Saturday",
                                   style: TextStyle(
@@ -633,7 +800,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                           Row(
                             children: const <Widget>[
                               Padding(
-                                padding: EdgeInsets.only(left: 74,bottom: 10),
+                                padding: EdgeInsets.only(left: 74, bottom: 10),
                                 child: Text(
                                   "Sunday",
                                   style: TextStyle(
@@ -657,7 +824,6 @@ class _WorkingDaysState extends State<WorkingDays> {
                               ),
                             ],
                           ),
-
                         ],
                       ),
                     ),
@@ -669,5 +835,10 @@ class _WorkingDaysState extends State<WorkingDays> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+
   }
 }
